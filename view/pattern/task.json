@@ -1,0 +1,33 @@
+{
+  "drive": "DriveMysql",
+  "database": "uello",
+  "connections": "local",
+  "table": "client",
+  "columns": [
+    "id",
+    "nome",
+    "email",
+    "datanasc",
+    "endereco",
+    "cep"
+  ],
+  "limitpage": "100",
+  "where": {
+    "optional": {
+      "id": "/^[a-zA-Z0-9]+$/",
+      "nome": "/^[a-zA-Z0-9]+$/",
+      "email": "/^[a-zA-Z0-9]+$/",
+      "datanasc": "/^[a-zA-Z0-9]+$/",
+      "endereco": "/^[a-zA-Z0-9]+$/",
+      "cep": "/^[a-zA-Z0-9]+$/"
+    }
+  },
+  "requires": {
+    "REQUEST": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE"
+    ]
+  }
+}

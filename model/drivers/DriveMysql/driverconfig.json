@@ -1,0 +1,29 @@
+{
+  "get": [
+    "table",
+    "whereString",
+    "columns",
+    "limitpage",
+    "orderby"
+  ],
+  "post": [
+    "table",
+    "data"
+  ],
+  "put": [
+    "table",
+    "data",
+    "whereString"
+  ],
+  "delete": [
+    "table",
+    "whereString"
+  ],
+  "show_table": [
+    "database"
+  ],
+  "show_table_columns": [
+    "database",
+    "table"
+  ]
+}
