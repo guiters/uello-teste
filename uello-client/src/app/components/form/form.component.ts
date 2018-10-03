@@ -129,4 +129,31 @@ export class FormComponent implements OnInit {
       }
     });
   }
+
+  exportCSV() {
+    const cols = 'id;nome;email;datanasc;endereco;cpf';
+    const data = this.ConvertToCSV(this.endAddr);
+    const a = window.document.createElement('a');
+    a.href = window.URL.createObjectURL(new Blob([cols + '\r\n' + data], { type: 'text/csv' }));
+    a.download = 'export.csv';
+    document.body.appendChild(a);
+    a.click();
+  }
+
+  ConvertToCSV(objArray) {
+    const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+    for (let i = 0; i < array.length; i++) {
+      let line = '';
+      for (let index in array[i]) {
+        if (line != '') {
+          line += ';';
+        }
+        line += array[i][index];
+      }
+      str += line + '\r\n';
+    }
+
+    return str;
+  }
 }
