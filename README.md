@@ -1,60 +1,70 @@
-# Global RestFul
-### Hello, World this is a most userfull api eveeer
+# Guilherme Camacho - Project presentation
 
-#### Here you can use as Source
+### Hi, this is my test to join the Uello team.
 
- - MySQL Server
- - Create your ower driver
-
-Using a simple interface we prefer the ambiance KISS (Keep It Simple N Stupid), To anyone create  a api to any application
-
-All the system is based in the PATTERN Schema Creating a PATTERN JSON file the system is automatic read and process this pattern in the best way.
-
-We show to you an example:
-
-	{  
-	  "drive": "DriveMysql",  
-	  "database": "MyCompany",  
-	  "table": "Employers",  
-	  "columns": [
-		  "id",
-		  "document"
-	  ],
-	  "limitpage": "100",  
-	  "where": {
-		  "require": {
-			  "id": "/^\[0-9\]*$/"
-	      },
-	      "optional": {
-		      "document": "/^\[0-9\]*$/"
-		  }
-	   },
-	   "requires": {
-		   "REQUEST": [
-		   "GET",
-		   "POST",
-		   "PUT",
-		   "DELETE"
-		   ]
-		}
-	}
-
-### Now i will explain this
-
- 1. drive = Drive of connection with the source
- 2. database = The database in de source *optional for no database source
- 3. table = The table in the source
- 4. columns = The columns to show in the response this is an array
- 5. limitpage = the limit to show in each page
- 6. where = the request avalible to user search the data
-	 1. require = An array of columns with regex validation for each request
-	 2. optional = An array  of columns with regex validation not required
-7. requires = an array of Requires for all request
-	1. REQUEST = Array of all request type available
+## Front End
+#### ( directory `/uello-client`)
+The frontend is developed in React JS in version 16.5
 
 
-----------
+### `npm install` 
+This will be install all dependencies to project 
+
+### `ng serve`
+Runs the app in the development mode.
+Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
+The page will reload if you make edits.
+You will also see any lint errors in the console.
+
+### `bg build`
+Builds the app for production to the `build` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+The build is minified and the filenames include the hashes.
+Your app is ready to be deployed!
+
+## Back End
+#### ( directory `/`)
+The backend of the project is done in a framework created by myself.
+What I call  [globalrestfull](https://github.com/guiters/globalrestful) you can find it on my github
+
+It functions as an api incorporator where it is automatically interpreted through a **.json** file.
+
+#### How it works?
+
+By interpreting the pattern inside the .json file, it is possible to find several keys that make the whole process of connection and integrity of the data.
+
+**View the file `/backend/view/pattern/client.json`**
+
+### Explanation:
+- The key (**drive**) is how that endpoint will have its data source
+- The key (**database**) the name of the database
+- The key (**connections**) the name of the connection that will be used with the database
+- The key (**table**) makes the direct connection with the table in the base
+- The array (**columns**) that lists all the columns within that table.
+- The key (**limitpage**) brings a complete pagination to the api in order to display only the amount informed
+ > To access the other pages just to enter the key (page = page number) in de URL as GET
+- The (**where**) can be two other objects (require and optional) these getting another object containing the column name as key and value as a [regex](https://medium.com/trainingcenter/entendendo-de-uma-vez-por-todas-express%C3%B5es-regulares-parte-7-66be1ac1f72d) to validate what is inserted inside that key.
+- And by the end the object (**requires**) that it brings a unique other called (REQUEST) this will contain all the modes of use of that endpoint within the standard REST
+	- GET = LIST CONTENT
+	- POST = CREATE CONTENT
+	- PUT = EDIT CONTENT
+	- DELETE = REMOVE CONTENT
+
+### PHP Server in development mode
+#### `php -S 0.0.0.0:8000` in directory of `/backend`
+
+### Mysql Server 
+#### `mysql DBNAME < /backend/mysqldump.sql`
+
+### Configure the api to connect with mysql
+Open the file `/backend/model/drivers/server.config.json`
 
 
-### How Works ?
-![Diagram](https://lh5.googleusercontent.com/4lS-AHyeaW2tLWgFxr970axzfQx8_4tF_SCRLtYRONa6EYlsic01HtuOAT3I_vbGpiK6wx4hBVXVPHQggF8z=w1920-h960)
+Edit file with the connection data (IMPORTANT: **The key is the connections name in pattern file**)
+
+
+`host: "IPOFSERVER"`
+
+`username: "USEROFSERVER"`
+
+`password: "PASSWORDOFSERVER"`
