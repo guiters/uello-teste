@@ -9,7 +9,7 @@
     "email",
     "datanasc",
     "endereco",
-    "cep"
+    "cpf"
   ],
   "limitpage": "100",
   "where": {
@@ -19,7 +19,7 @@
       "email": "/^[a-zA-Z0-9]+$/",
       "datanasc": "/^[a-zA-Z0-9]+$/",
       "endereco": "/^[a-zA-Z0-9]+$/",
-      "cep": "/^[a-zA-Z0-9]+$/"
+      "cpf": "/^[a-zA-Z0-9]+$/"
     }
   },
   "requires": {

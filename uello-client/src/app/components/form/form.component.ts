@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * from 'jquery';
 
+import { ClientService } from '../../services/client/client.service';
+import { Client } from '../../models/client';
+
+
+declare var jquery: any;
 declare var $: any;
-
+declare var google: any;
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -15,9 +19,15 @@ export class FormComponent implements OnInit {
   file;
   addrSelected = {};
   addrNew = {};
-  constructor() { }
+  constructor(private clientService: ClientService) { }
 
   ngOnInit() {
+    this.clientService.getClients().subscribe(res => {
+      if (res.length > 0) {
+        this.endAddr = res;
+      }
+    });
+
     $(document).ready(function () {
       $('select').formSelect();
       $('#modalView').modal();
@@ -30,29 +40,45 @@ export class FormComponent implements OnInit {
     const result = [];
     const headers = lines[0].split(';');
     for (let i = 1; i < lines.length; i++) {
-
       const obj = {};
       const currentline = lines[i].split(';');
       for (let j = 0; j < headers.length; j++) {
         obj[headers[j]] = currentline[j];
       }
       result.push(obj);
-
     }
     return result; // JavaScript object
   }
+
   addNewAddr() {
-    this.addrNew['endereco'] = document.getElementById('end').value;
+    const end = document.getElementById('end') as HTMLInputElement;
+    this.addrNew['endereco'] = end.value;
     this.showModalMap(this.addrNew, 'Nmap');
     $('#modalNew').modal('open');
   }
 
   saveNewAddr() {
-    this.addrNew['nome'] = document.getElementById('nome').value
-    this.addrNew['email'] = document.getElementById('email').value
-    this.addrNew['datanasc'] = document.getElementById('datanasc').value
-    this.addrNew['cpf'] = document.getElementById('cpf').value
+    const nome = document.getElementById('nomee') as HTMLInputElement;
+    const email = document.getElementById('email') as HTMLInputElement;
+    const datanasc = document.getElementById('datanasc') as HTMLInputElement;
+    const cpf = document.getElementById('cpf') as HTMLInputElement;
+
+    this.addrNew['nome'] = nome.value;
+    this.addrNew['email'] = email.value;
+    this.addrNew['datanasc'] = datanasc.value;
+    this.addrNew['cpf'] = cpf.value;
     this.endAddr.push(this.addrNew);
+    const client: Client = {
+      id: 0,
+      nome: this.addrNew['nome'],
+      cpf: this.addrNew['cpf'],
+      email: this.addrNew['email'],
+      datanasc: this.addrNew['datanasc'],
+      endereco: this.addrNew['endereco']
+    };
+    this.clientService.createClient(client).subscribe(res => {
+      console.log(res);
+    });
     this.addrNew = {};
   }
 
@@ -62,6 +88,17 @@ export class FormComponent implements OnInit {
     reader.onload = () => {
       const lines = this.csvJSON(reader.result);
       for (let i = 0; i < lines.length; i++) {
+        const client: Client = {
+          id: 0,
+          nome: lines[i]['nome'],
+          cpf: lines[i]['cpf'],
+          email: lines[i]['email'],
+          datanasc: lines[i]['datanasc'],
+          endereco: lines[i]['endereco']
+        };
+        this.clientService.createClient(client).subscribe(res => {
+          console.log(res);
+        });
         this.endAddr.push(lines[i]);
       }
     };
