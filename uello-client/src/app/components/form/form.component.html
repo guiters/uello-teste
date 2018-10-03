@@ -1,0 +1,105 @@
+<form class="col s12">
+  <div class="row">
+    <div class="input-field col s12">
+      <input placeholder="Digite o endereco inicial" id="start"
+        type="text" class="validate" value="{{address}}">
+      <label for="start">Endereco inicial</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <p class="flow-text">Enderecos de destino</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <ul>
+        <li *ngFor="let addr of endAddr">
+          <a class="waves-effect waves-light btn btn-small buttonList
+            modal-trigger" (click)="viewAddr(addr)" href="#modalView">{{addr['endereco']}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <label>Importe um arquivo CSV</label>
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>Buscar</span>
+          <input type="file" (change)="newRoutes($event)" />
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text"
+            placeholder="Envie um arquivo" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field input-group col s12">
+      <input id="end" type="text" class="validate">
+      <label for="end" class="">Endereco de destino</label>
+      <span class="suffix">
+        <a (click)="addNewAddr()" class="btn btn-floating waves-effect
+          waves-light">+</a>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <button type="button" class="waves-effect waves-light btn">Tracar
+        uma rota</button>
+    </div>
+  </div>
+</form>
+
+
+<!-- Modal Structure -->
+<div id="modalView" class="modal">
+  <div class="modal-content">
+    <h4>{{addrSelected['endereco']}}</h4>
+    <div class="row">
+      <div class="col s4">
+        <p><b>Cliente:</b> {{addrSelected['nome']}}</p>
+        <p><b>E-mail:</b> {{addrSelected['email']}}</p>
+        <p><b>Data Nascimento:</b> {{addrSelected['datanasc']}}</p>
+        <p><b>CPF:</b> {{addrSelected['cpf']}}</p>
+      </div>
+      <div class="col s8">
+        <div id="Smap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalNew" class="modal">
+  <div class="modal-content">
+    <h4>{{addrNew['endereco']}}</h4>
+    <div class="row">
+      <div class="col s4">
+        <p><b>Cliente:</b>
+          <input id="nome" type="text" value="{{addrNew['nome']}}">
+        </p>
+        <p><b>E-mail:</b> {{addrNew['email']}}
+          <input id="email" type="text" value="{{addrNew['email']}}">
+        </p>
+        <p><b>Data Nascimento:</b> {{addrNew['datanasc']}}
+          <input id="datanasc" type="text" value="{{addrNew['datanasc']}}">
+        </p>
+        <p><b>CPF:</b> {{addrNew['cpf']}}
+          <input id="cpf" type="text" value="{{addrNew['cpf']}}">
+        </p>
+      </div>
+      <div class="col s8">
+        <div id="Nmap"></div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button (click)="saveNewAddr()" class="modal-close waves-effect waves-green btn-flat">Adicionar
+        novo</button>
+    </div>
+  </div>
+</div>

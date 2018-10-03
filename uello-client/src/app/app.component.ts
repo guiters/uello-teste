@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'uello-client';
+  address = '';
+  reciverFeedback(event) {
+    this.address = event;
+  }
 }
